@@ -7,7 +7,27 @@ from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 
 # Create your objects here.
-ev3 = EV3Brick()
+ev3 = None
+state = "find"
+def mainloop():
+    global state
+    match state:
+        case "find":
+            ev3.screen.print("find")
+            state = "follow"
+        case "follow":
+            ev3.screen.print("follow")
+            state = "find"
+        case _:
+            ev3.screen.print("error")
+            state = "find"
 
-# Progrm
-ev3.speaker.say('Hello, DHL here! Your Package got delivered.')
+def setup():
+    global ev3
+    ev3 = EV3Brick()
+
+if __name__ =="__main__":
+    setup()
+    while True:
+        mainloop()
+    
