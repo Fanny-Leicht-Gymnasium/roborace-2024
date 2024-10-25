@@ -11,16 +11,15 @@ ev3 = None
 state = "find"
 def mainloop():
     global state
-    match state:
-        case "find":
-            ev3.screen.print("find")
-            state = "follow"
-        case "follow":
-            ev3.screen.print("follow")
-            state = "find"
-        case _:
-            ev3.screen.print("error")
-            state = "find"
+    if state == "find":
+        ev3.screen.print("find")
+        state = "follow"
+    elif state == "follow":
+        ev3.screen.print("follow")
+        state = "find"
+    else:
+        ev3.screen.print("error")
+        state = "find"
 
 def setup():
     global ev3
