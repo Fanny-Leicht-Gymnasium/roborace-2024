@@ -5,7 +5,7 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
-
+import seiten_regler
 # Create your objects here.
 ev3 = None
 state = "find"
@@ -15,9 +15,9 @@ def mainloop():
         case "find":
             ev3.screen.print("find")
             state = "follow"
-        case "follow":
+        case "seitenFollow":
+            state = seiten_regler.seiten_regler(ev3)
             ev3.screen.print("follow")
-            state = "find"
         case _:
             ev3.screen.print("error")
             state = "find"
