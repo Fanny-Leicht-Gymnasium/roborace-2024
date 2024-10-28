@@ -35,6 +35,7 @@ def mainloop():
     else:
         ev3.screen.print("error")
         state = "find"
+    wait(10)
 
 def setup():
     global ev3, driver, left_motor, right_motor, usm, colorSensor, us, state

@@ -1,0 +1,3 @@
+[submodule "pybricks"]
+	path = pybricks
+	url = https://github.com/Mr-Comand/pybricks-emulator.git
