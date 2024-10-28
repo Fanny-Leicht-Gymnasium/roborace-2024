@@ -10,12 +10,12 @@ import find_house
 
 # Initialize the motors.
 ev3 = EV3Brick()
-left_motor = Motor(Port.A)
-right_motor = Motor(Port.D)
-usm = Motor(Port.C)
-driver = DriveBase(left_motor, right_motor, wheel_diameter=66.8, axle_track=145)
-colorSensor = ColorSensor(Port.S1)
-us = UltrasonicSensor(Port.S4)
+# left_motor = Motor(Port.A)
+# right_motor = Motor(Port.D)
+usm = Motor(Port.A)
+# driver = DriveBase(left_motor, right_motor, wheel_diameter=66.8, axle_track=145)
+# colorSensor = ColorSensor(Port.S1)
+us = UltrasonicSensor(Port.S1)
 
 
 #GYRO gyro = GyroSensor(Port.S2)
@@ -26,7 +26,8 @@ def mainloop():
     global ev3, driver, left_motor, right_motor, usm, colorSensor, us, state
     if state == "find":
         ev3.screen.print("find")
-        state = "follow"
+        find_house.find_house(us, usm)
+        state = "find"
     elif state == "follow":
         ev3.screen.print("follow")
         state = "find"
