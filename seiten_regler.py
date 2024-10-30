@@ -1,19 +1,46 @@
 from pybricks.ev3devices import UltrasonicSensor
 
-def seiten_regler(ev3, dt) -> str: # returns new state
-    SETPOINT_DISTANCE = 2 #Sollwert Abstand
-    us = UltrasonicSensor()
-    distance = us.distance_centimeters_ping()
-    print(distance)
-    PID( , , , dt, SETPOINT_DISTANCE, distance)
-    return "seitenFollow"
+import csv
 
+# PID constants
+Kp = 5
+Ki = 0#.0025
+Kd = 0.000
+SETPOINT_DISTANCE = 10  # Target distance from the wall in mm
+integral = 0
+previous_error = 0
+counter = 0
 def PID(Kp, Ki, Kd, dt, setpoint, current_value):
+    global integral, previous_error
+    
     error = setpoint - current_value
-    integral = integral + Ki * dt * error
-    derivative = (current_value - previous_value) / dt
-    output = Kp * error + Ki * integral + Kd * derivative
+    integral += error * dt * Ki
+    integral = min(integral,40)
+    integral = max(integral,-40)
+    derivative = (error - previous_error) / dt
+    output = Kp * error + integral + Kd * derivative
+    previous_error = error
+    log_data(current_value,error,integral,derivative,output,dt)
+    print(current_value,"\t",error,"\t",integral,"\t",derivative,"\t",output)
     return output
 
-def Motor_Regelung(output):
-    none
+def seiten_regler(ev3, dt, us, driver) -> str:  # Returns new state
+    distance = us.distance()  # Get current distance from the wall
+    # print("Distance:", distance)
+    distance = min(distance, 1000)
+    output = PID(Kp, Ki, Kd, dt, SETPOINT_DISTANCE, distance)
+    Motor_Regelung(output, driver)
+    return "seitenFollow"
+
+def Motor_Regelung(output, driver):
+    # Adjust motors based on PID output
+    # Positive output means too far; negative means too close
+    driver.drive(40, -output/10)  # Adjust steering; 100 is the speed
+log_file = 'pid_log.csv'
+def log_data(*data):
+    global counter
+    # Append data to the CSV file
+    with open(log_file, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([counter, *data])
+        counter += 1
