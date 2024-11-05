@@ -20,7 +20,6 @@ def PID(Kp, Ki, Kd, dt, setpoint, current_value):
     derivative = (error - previous_error) / dt
     output = Kp * error + integral + Kd * derivative
     previous_error = error
-    log_data(current_value,error,integral,derivative,output,dt)
     print(current_value,"\t",error,"\t",integral,"\t",derivative,"\t",output)
     return output
 
@@ -36,11 +35,3 @@ def Motor_Regelung(output, driver):
     # Adjust motors based on PID output
     # Positive output means too far; negative means too close
     driver.drive(40, -output/10)  # Adjust steering; 100 is the speed
-log_file = 'pid_log.csv'
-def log_data(*data):
-    global counter
-    # Append data to the CSV file
-    with open(log_file, mode='a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([counter, *data])
-        counter += 1
