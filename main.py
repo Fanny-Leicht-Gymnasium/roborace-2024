@@ -6,38 +6,36 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
-import find_house
-
-# Initialize the motors.
+import seiten_regler
+import time
+# Create your objects here.
+# Initialize the EV3 brick, motors, and sensors
 ev3 = EV3Brick()
-# left_motor = Motor(Port.A)
-# right_motor = Motor(Port.D)
-usm = Motor(Port.A)
-# driver = DriveBase(left_motor, right_motor, wheel_diameter=66.8, axle_track=145)
-# colorSensor = ColorSensor(Port.S1)
-us = UltrasonicSensor(Port.S1)
-
-
-#GYRO gyro = GyroSensor(Port.S2)
-#tSensor = TouchSensor(Port.S3)
-
-state = "find"
+left_motor = Motor(Port.A)
+right_motor = Motor(Port.D)
+us_motor = Motor(Port.C)  # For panning if needed
+driver = DriveBase(left_motor, right_motor, wheel_diameter=66.8, axle_track=145)
+colorSensor = ColorSensor(Port.S1)
+us = UltrasonicSensor(Port.S4)
+last = time.time()-10
+state = "seitenFollow"
 def mainloop():
-    global ev3, driver, left_motor, right_motor, usm, colorSensor, us, state
-    if state == "find":
-        ev3.screen.print("find")
-        find_house.find_house(us, usm)
-        state = "find"
-    elif state == "follow":
-        ev3.screen.print("follow")
-        state = "find"
-    else:
-        ev3.screen.print("error")
-        state = "find"
-    wait(10)
-
+    global state, last
+    dt = time.time() - last
+    last = time.time()
+    match state:
+        case "find":
+            ev3.screen.print("find")
+            state = "follow"
+        case "seitenFollow":
+            seiten_regler.seiten_regler(ev3, dt, us, driver)
+            ev3.screen.print("seitenFollow")
+        case _:
+            ev3.screen.print("error")
+            state = "find"
+    wait(1)
 def setup():
-    global ev3, driver, left_motor, right_motor, usm, colorSensor, us, state
+    None
 
 if __name__ =="__main__":
     setup()
