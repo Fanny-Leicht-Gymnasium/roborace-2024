@@ -51,6 +51,9 @@ if __name__ =="__main__":
     while not us.distance() <= 20:
         seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
     
+    # turn robot 90 degrees to the left
+    driver.turn(90)
+    
     # drive forward until green line
     while not color.checkColor(Color.GREEN):
         seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
