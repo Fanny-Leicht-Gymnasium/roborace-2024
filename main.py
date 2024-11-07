@@ -41,6 +41,7 @@ if __name__ =="__main__":
     while not color.checkColor(Color.RED):
         seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
     
+    driver.stop()
     # when red line: find the direciton in which the house is located
     house_angle = find_house.find_house(us, us_motor)
     
@@ -51,6 +52,7 @@ if __name__ =="__main__":
     while not us.distance() <= 20:
         seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
     
+    driver.stop()
     # turn robot 90 degrees to the left
     driver.turn(90)
     
@@ -59,9 +61,8 @@ if __name__ =="__main__":
         seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
         
     # draw a smiley and stop
+    driver.stop()
     screen.smiley(ev3)
-    while True:
-        pass 
     
         
         
