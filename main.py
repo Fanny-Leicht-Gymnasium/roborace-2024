@@ -42,7 +42,7 @@ if __name__ =="__main__":
         seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
     
     # when red line: find the direciton in which the house is located
-    house_angle = find_house.find_house()
+    house_angle = find_house.find_house(us, us_motor)
     
     # turn the robot in the direction of the house
     driver.turn(house_angle)
