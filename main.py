@@ -15,7 +15,7 @@ import screen
 # customization vars
 wheel_diameter = 66.8
 axle_track = 14
-wall_distance = 20 # min distance to walls in mm
+wall_distance = 200 # min distance to walls in mm
 
 
 # system vars
