@@ -29,7 +29,7 @@ us = UltrasonicSensor(Port.S4)
 last = time.time()-10
 
 def setup():
-    us_motor.run_target(speed=100, target_angle=-90*56/24)
+    us_motor.run_target(speed=100, target_angle=90*56/24)
 
 if __name__ =="__main__":
     # setup when starting the program
@@ -45,7 +45,7 @@ if __name__ =="__main__":
         seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
     
     driver.stop()
-    driver.turn(-15*40/16)
+    driver.turn(15*40/16)
     # when red line: find the direciton in which the house is located
     house_angle = find_house.find_house(us, us_motor)
     print("--"*30)
@@ -64,12 +64,12 @@ if __name__ =="__main__":
     driver.stop()
     # turn robot 90 degrees to the left
     # driver.turn(90)
-    driver.turn(-90*40/16)
-    us_motor.run_target(speed=100, target_angle=-90*56/24)
+    driver.turn(90*40/16)
+    us_motor.run_target(speed=100, target_angle=90*56/24)
     ev3.speaker.beep()
     wait(100)
     # drive forward until green line
-    while not color.checkColor(Color.GREEN):
+    while not color.checkColor(Color.RED):
         print("Aktuell: ",colorSensor.color(),colorSensor.rgb()," Soll: ",Color.GREEN)
         seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
         

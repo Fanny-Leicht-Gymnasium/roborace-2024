@@ -1,8 +1,8 @@
 from pybricks.tools import wait
 def find_house(us, usm):
-    angle = 75-75
-    endAngle = 75+75
-    deg_sec= 100
+    angle = -75-75
+    endAngle = 0
+    deg_sec= 1000
     degreePerStep = 5 # Drehwinkel
 
     minAngle = -1

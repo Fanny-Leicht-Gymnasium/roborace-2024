@@ -33,4 +33,4 @@ def seiten_regler(ev3, dt, us, driver, wall_distance) -> str:  # Returns new sta
 def Motor_Regelung(output, driver):
     # Adjust motors based on PID output
     # Positive output means too far; negative means too close
-    driver.drive(-50, -output/10)  # Adjust steering; 100 is the speed
+    driver.drive(-50, output/10)  # Adjust steering; 100 is the speed
