@@ -12,7 +12,10 @@ colorSensor = ColorSensor(Port.S1)
 
 # Main loop
 while True:
-    color_value = colorSensor.color()
+    color_value = colorSensor.rgb()
     ev3.screen.clear()
+    # ev3.screen.draw_text(0, 50, "{}".format(color_value))
     ev3.screen.draw_text(0, 50, "Color Sensor Value: {}".format(color_value))
+    # ev3.screen.draw_text(0, 50, "Color Sensor Value: {}".format(color_value))
+    ev3.screen.draw_text(0, 70, "{}".format(color_value))
     time.sleep(5)
