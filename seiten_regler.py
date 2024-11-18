@@ -6,7 +6,6 @@ import csv
 Kp = 5
 Ki = 0#.0025
 Kd = 0.000
-SETPOINT_DISTANCE = 10  # Target distance from the wall in mm
 integral = 0
 previous_error = 0
 counter = 0
@@ -20,27 +19,18 @@ def PID(Kp, Ki, Kd, dt, setpoint, current_value):
     derivative = (error - previous_error) / dt
     output = Kp * error + integral + Kd * derivative
     previous_error = error
-    log_data(current_value,error,integral,derivative,output,dt)
     print(current_value,"\t",error,"\t",integral,"\t",derivative,"\t",output)
     return output
 
-def seiten_regler(ev3, dt, us, driver) -> str:  # Returns new state
+def seiten_regler(ev3, dt, us, driver, wall_distance) -> str:  # Returns new state
     distance = us.distance()  # Get current distance from the wall
     # print("Distance:", distance)
     distance = min(distance, 1000)
-    output = PID(Kp, Ki, Kd, dt, SETPOINT_DISTANCE, distance)
+    output = PID(Kp, Ki, Kd, dt, wall_distance, distance)
     Motor_Regelung(output, driver)
     return "seitenFollow"
 
 def Motor_Regelung(output, driver):
     # Adjust motors based on PID output
     # Positive output means too far; negative means too close
-    driver.drive(40, -output/10)  # Adjust steering; 100 is the speed
-log_file = 'pid_log.csv'
-def log_data(*data):
-    global counter
-    # Append data to the CSV file
-    with open(log_file, mode='a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([counter, *data])
-        counter += 1
+    driver.drive(-50, output/10)  # Adjust steering; 100 is the speed
