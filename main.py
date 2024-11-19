@@ -17,10 +17,11 @@ wheel_diameter = 66.8
 axle_track = 14
 wall_distance = 200 # min distance to walls in mm
 
-# color check
+# color check (not tested yet!)
+# adjust these values as needed
 red = (1, 1, 1)
 green = (1, 1, 1)
-tolerance = (1, 1, 1)
+tolerance = 30 
 
 # system vars
 ev3 = EV3Brick()
