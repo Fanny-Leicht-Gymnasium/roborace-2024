@@ -55,9 +55,16 @@ if __name__ =="__main__":
         while not checkColor(red):
             seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
             print(checkColor(red))
-        # /////////////////////
-        # DROP PACKAGE FUNCTION HERE
-        # /////////////////////
+        ''' 
+        /////////////////////
+        DROP PACKAGE FUNCTION HERE
+        idea: 
+        1. save current state of us_sensor_motor
+        2. turn the motor as far as it needs to for the package to drop
+        3. turn the motor back to the saved state
+        4. continue
+        /////////////////////
+        '''
         driver.stop()
         driver.turn(15*40/16)
         # when red line: find the direction in which the house is located
