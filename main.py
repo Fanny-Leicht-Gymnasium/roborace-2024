@@ -49,44 +49,39 @@ if __name__ =="__main__":
     setup()
     dt = time.time() - last
     last = time.time()
-    # drive forward until red line
-    # while True:'
-    #     None'
-    #     driver.drive(-50, 0)
     
-    while not checkColor(red):
-        seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
-        print(checkColor(red))
-    
-    driver.stop()
-    driver.turn(15*40/16)
-    # when red line: find the direciton in which the house is located
-    house_angle = find_house.find_house(us, us_motor)
-    print("--"*30)
-    print(house_angle)
-    # turn the robot in the direction of the house
-    driver.turn(-house_angle*40/16)
-    ev3.speaker.beep()
-    wait(100)
-    us_motor.run_target(1000, 0)
-    ev3.speaker.beep()
-    wait(100)
-    # drive forward until house wall reached (= until distance to the house is <= 20mm)
-    while not us.distance() <= 200:
-        driver.drive(-50, 0)
-    
-    driver.stop()
-    # turn robot 90 degrees to the left
-    # driver.turn(90)
-    driver.turn(90*40/16)
-    us_motor.run_target(speed=100, target_angle=90*56/24)
-    ev3.speaker.beep()
-    wait(100)
-    # drive forward until green line
-    while not color.checkColor(green):
-        print(checkColor(green))
-        seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
+    # loop the main program until green line
+    while not checkColor(green):
+        while not checkColor(red):
+            seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
+            print(checkColor(red))
+        # /////////////////////
+        # DROP PACKAGE FUNCTION HERE
+        # /////////////////////
+        driver.stop()
+        driver.turn(15*40/16)
+        # when red line: find the direction in which the house is located
+        house_angle = find_house.find_house(us, us_motor)
+        print("--"*30)
+        print(house_angle)
+        # turn the robot in the direction of the house
+        driver.turn(-house_angle*40/16)
+        ev3.speaker.beep()
+        #wait(100)
+        us_motor.run_target(1000, 0)
+        ev3.speaker.beep()
+        #wait(100)
+        # drive forward until house wall reached (= until distance to the house is <= 20mm)
+        while not us.distance() <= 200:
+            driver.drive(-50, 0)
         
+        driver.stop()
+        # turn robot 90 degrees to the left
+        driver.turn(90*40/16)
+        us_motor.run_target(speed=100, target_angle=90*56/24)
+        ev3.speaker.beep()
+        wait(100)
+            
     # draw a smiley and stop
     driver.stop()
     us_motor.run_target(speed=100, target_angle=-0*56/24)
