@@ -15,7 +15,7 @@ import screen
 # customization vars
 wheel_diameter = 66.6*5
 axle_track = 200
-wall_distance = 216 # min distance to walls in mm
+wall_distance = 256 # min distance to walls in mm
 
 # color check (not tested yet!)
 # adjust these values as needed
@@ -66,8 +66,8 @@ if __name__ =="__main__":
     last = time.time()
     
     # loop the main program until green line
-    while not checkColor(green):
-        while not checkColor(red):
+    while not color.checkColor(Color.GREEN):
+        while not color.checkColor(Color.RED):
             seiten_regler.seiten_regler(ev3, dt, us, driver, wall_distance)
             # wait(100)
 
@@ -91,14 +91,14 @@ if __name__ =="__main__":
         print("--"*30)
         print(house_angle)
         # turn the robot in the direction of the house
-        driver.turn(-house_angle-usstart)
+        driver.turn(-house_angle)
         ev3.speaker.beep()
         #wait(100)
         us_motor.run_target(10000, -usstart*56/24)
         ev3.speaker.beep()
         #wait(100)
         # drive forward until house wall reached (= until distance to the house is <= 20mm)
-        while not us.distance() <= 300:
+        while not us.distance() <= wall_distance:
             driver.drive(-2500, 0)
         
         driver.stop()

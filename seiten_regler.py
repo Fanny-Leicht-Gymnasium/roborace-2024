@@ -12,7 +12,7 @@ integral = 0
 previous_error = 0
 counter = 0
 speed=400
-minradus=400
+minradus=500
 maxrotate=(speed/minradus)*180/3.14
 def PID(Kp, Ki, Kd, dt, setpoint, current_value):
     global integral, previous_error

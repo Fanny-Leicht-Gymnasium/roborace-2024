@@ -11,7 +11,7 @@ def find_house(us, usm):
     for angle in range(angle, endAngle, degreePerStep):
         usm.run_target(deg_sec, (angle-usstart)*56/24)
         dis1 = us.distance()
-        if  dis1 < minDistance and dis1 > 1000:
+        if  dis1 < minDistance and dis1 < 2000:
             minDistance = dis1
             minAngle = angle
         print(angle, dis1)
