@@ -5,7 +5,7 @@ import csv
 # PID constants
 Kp = 0.25
 Ki = 0#.0025
-Kd = 0.000
+Kd = 0.00
 Ks=0#.5
 slimit=100
 integral = 0

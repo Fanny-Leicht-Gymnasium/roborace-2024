@@ -83,7 +83,7 @@ if __name__ =="__main__":
         /////////////////////
         '''
         driver.stop()
-        driver.turn((75-15))
+        driver.turn((75))
         # dropPackage()
 
         # when red line: find the direction in which the house is located
@@ -98,8 +98,8 @@ if __name__ =="__main__":
         ev3.speaker.beep()
         #wait(100)
         # drive forward until house wall reached (= until distance to the house is <= 20mm)
-        while not us.distance() <= wall_distance:
-            driver.drive(-2500, 0)
+        while not us.distance() <= wall_distance-50:
+            driver.drive(-250, 0)
         
         driver.stop()
         # turn robot 90 degrees to the left
