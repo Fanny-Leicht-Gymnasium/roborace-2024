@@ -4,7 +4,7 @@ def find_house(us, usm):
     angle = -75+15
     endAngle = 75+15
     deg_sec= 1000
-    degreePerStep = 5 # Drehwinkel
+    degreePerStep = 5 
 
     minAngle = -1
     minDistance = 2000000
